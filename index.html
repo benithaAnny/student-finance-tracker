@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Student Finance Tracker</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+
+body{
+  margin:0;
+  background:#f5f5f5;
+  color:#222;
+}
+
+
+.skip{
+  position:absolute;
+  left:-999px;
+}
+.skip:focus{
+  left:10px;
+  top:10px;
+  background:#000;
+  color:#fff;
+  padding:6px;
+  border-radius:6px;
+}
+
+
+header{
+  background:#722f37;
+  border-bottom:1px solid #dddddd;
+  padding:12px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+    color:#fff;
+    font-weight:600;
+    font-size:18px;
+}
+
+nav a{
+  margin:0 8px;
+  text-decoration:none;
+  color:#fff;;
+  font-weight:500;
+}
+
+
+main{
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:15px;
+}
+
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid  #ccc;
+  background:#fff;
+  color:#222;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:none;
+  background:#722f37;
+  color:white;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#5c252c;
+}
+
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  margin-top:10px;
+  background:#eeeeee;
+  border:1px solid #dddddd;
+  border-radius:8px;
+}
+
+.income{ color:#6a1b4d; }
+.expense{ color:#a83246; }
+
+
+#stats{
+  font-size:14px;
+  line-height:1.6;
+}
+
+
+@media(max-width:768px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="logo"><strong>💰student Finance Tracker</strong></div>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#form">Add</a>
+    <a href="#records">Records</a>
+    <a href="#about">About</a>
+    <a href="#" class="nav-item" id="settingsBtn">Settings</a>
+  </nav>
+</header>
+
+<main id="main">
+
+
+<section id="dashboard">
+  <h2>Dashboard</h2>
+  <div id="stats" class="card"></div>
+</section>
+
+
+<div class="grid">
+
+  
+  <section id="form" class="card">
+    <h2>Add Record</h2>
+
+    <label>Description</label>
+    <input id="desc" type="text" placeholder="e.g. Lunch">
+
+    <label>Amount</label>
+    <input id="amount" type="number" placeholder="e.g. 10.50">
+
+    <label>Category</label>
+    <input id="cat" type="text" placeholder="e.g. Food">
+
+    <label>Date</label>
+    <input id="date" type="date">
+
+    <button onclick="UI.addRecord()">Add Record</button>
+  </section>
+
+  
+  <section class="card">
+    <h2>Settings</h2>
+
+    <p>Wine Theme Active</p>
+
+    <label>Search (regex supported)</label>
+    <input id="search" placeholder="Try: coffee|bus|2025">
+
+  </section>
+
+</div>
+
+
+<section id="records" class="card">
+  <h2>Records</h2>
+  <div id="list"></div>
+</section>
+
+
+<section id="about" class="card">
+  <h2>About</h2>
+   <p>
+    The purpose of this Student Finance Tracker is to help students manage
+    their personal finances by recording expenses, organizing spending into
+    categories, and monitoring financial habits over time. The application
+    provides a simple way to track transactions, search records, and view
+    useful statistics that support better budgeting and financial planning.
+  </p>
+
+  <h3>Contact</h3>
+
+  <p>
+    Email: b.akuzwe@alustudent.com
+  </p>
+
+  <p>
+    GitHub: repository link
+  </p>
+</section>
+
+</main>
+
+<script type="module" src="./scripts/ui.js"></script>
+
+</body>
+</html>

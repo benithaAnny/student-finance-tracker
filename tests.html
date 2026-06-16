@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Tests</h2>
+<div id="out"></div>
+
+<script type="module">
+import { regexRules } from "./scripts/app.js";
+
+const out=document.getElementById("out");
+
+function test(n,c){
+  const d=document.createElement("div");
+  d.textContent=(c?"PASS ":"FAIL ")+n;
+  out.appendChild(d);
+}
+
+test("Number regex",regexRules.number.test("12.50"));
+test("Date regex",regexRules.date.test("2025-01-01"));
+test("Duplicate word",regexRules.duplicate.test("hi hi"));
+</script>
+</body>
+</html>
