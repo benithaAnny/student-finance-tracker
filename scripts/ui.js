@@ -9,16 +9,43 @@ async init(){
   await seed();
   this.render();
 
-  
   document.querySelector("#search")
-  .addEventListener("input",(e)=>{
-    this.render(e.target.value);
+    .addEventListener("input",(e)=>{
+      this.render(e.target.value);
+    });
+
+  // budget target
+  const savedTarget = localStorage.getItem("budgetTarget");
+  if(savedTarget){
+    document.querySelector("#budgetTarget").value = savedTarget;
+  }
+
+  document.querySelector("#saveTarget")
+    .addEventListener("click", () => {
+      const val = Number(document.querySelector("#budgetTarget").value);
+      localStorage.setItem("budgetTarget", val);
+      this.render();
+    });
+
+  // settings
+  const settingsBtn = document.getElementById("settingsBtn");
+  const panel = document.getElementById("settingsPanel");
+
+  settingsBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    panel.style.display =
+      panel.style.display === "block" ? "none" : "block";
+  });
+
+  // theme
+  const themeSelect = document.getElementById("themeSelect");
+  themeSelect?.addEventListener("change", (e) => {
+    document.body.className = e.target.value;
   });
 },
 
 addRecord(){
 
-  
   const desc = document.querySelector("#desc");
   const amount = document.querySelector("#amount");
   const cat = document.querySelector("#cat");
@@ -30,33 +57,23 @@ addRecord(){
     amount: Number(amount.value),
     category: cat.value,
     date: date.value,
+    type: Number(amount.value) >= 0 ? "income" : "expense",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
 
-  
   const err = validate(r);
   if(err) return alert(err);
 
-  
   if(!r.description || !r.amount || !r.category || !r.date){
     return alert("Please fill all fields");
   }
 
-  
   State.records.push(r);
   save(State.records);
 
   this.render();
 
-  
-  const status = document.querySelector("#status");
-  if(status){
-    status.textContent = "✅ Record added successfully!";
-    setTimeout(()=> status.textContent = "", 3000);
-  }
-
-  
   desc.value = "";
   amount.value = "";
   cat.value = "";
@@ -76,10 +93,16 @@ render(q=""){
 
   const data = q ? search(q) : State.records;
 
-  let total = 0;
+  let income = 0;
+  let expenses = 0;
 
   data.forEach(r => {
-    total += Number(r.amount);
+
+    if(r.type === "income"){
+      income += Number(r.amount);
+    } else {
+      expenses += Number(r.amount);
+    }
 
     const div = document.createElement("div");
     div.className = "item";
@@ -89,6 +112,7 @@ render(q=""){
         <b>${r.description}</b><br>
         <small>${r.category} | ${r.date}</small>
       </div>
+
       <div>
         ${r.amount}
         <button onclick="UI.deleteRecord('${r.id}')">X</button>
@@ -98,11 +122,29 @@ render(q=""){
     list.appendChild(div);
   });
 
+  const balance = income - expenses;
+  const budget = Number(localStorage.getItem("budgetTarget")) || 0;
+  const remaining = budget - expenses;
+
   document.querySelector("#stats").innerHTML = `
-    Total Records: ${State.records.length}<br>
-    Total Amount: ${total}
+    <p>Total Records: ${State.records.length}</p>
+    <p>Income: ${income}</p>
+    <p>Expenses: ${expenses}</p>
+    <p>Balance: ${balance}</p>
   `;
+
+  const targetBox = document.querySelector("#targetStats");
+  if(targetBox){
+    targetBox.innerHTML = budget
+      ? `
+        <p>Budget: ${budget}</p>
+        <p>Spent: ${expenses}</p>
+        <p>Remaining: ${remaining}</p>
+      `
+      : "No target set";
+  }
 }
+
 };
 
 UI.init();

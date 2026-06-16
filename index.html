@@ -12,14 +12,13 @@
   font-family:Arial, sans-serif;
 }
 
-
 body{
   margin:0;
   background:#f5f5f5;
   color:#222;
 }
 
-
+/* Skip link */
 .skip{
   position:absolute;
   left:-999px;
@@ -33,29 +32,29 @@ body{
   border-radius:6px;
 }
 
-
+/* Header */
 header{
   background:#722f37;
-  border-bottom:1px solid #dddddd;
   padding:12px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
+
 .logo{
-    color:#fff;
-    font-weight:600;
-    font-size:18px;
+  color:#fff;
+  font-weight:600;
+  font-size:18px;
 }
 
 nav a{
   margin:0 8px;
   text-decoration:none;
-  color:#fff;;
+  color:#fff;
   font-weight:500;
 }
 
-
+/* Layout */
 main{
   padding:20px;
 }
@@ -73,15 +72,13 @@ main{
   padding:15px;
 }
 
-
+/* Inputs */
 input, select{
   width:100%;
   padding:10px;
   margin-top:8px;
   border-radius:8px;
-  border:1px solid  #ccc;
-  background:#fff;
-  color:#222;
+  border:1px solid #ccc;
 }
 
 button{
@@ -93,39 +90,46 @@ button{
   background:#722f37;
   color:white;
   cursor:pointer;
-  transition:0.2s;
 }
 
 button:hover{
   background:#5c252c;
 }
 
-
-.item{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  margin-top:10px;
-  background:#eeeeee;
-  border:1px solid #dddddd;
-  border-radius:8px;
+/* Settings panel */
+#settingsPanel{
+  display:none;
+  position:fixed;
+  top:80px;
+  right:20px;
+  width:280px;
+  z-index:1000;
 }
 
-.income{ color:#6a1b4d; }
-.expense{ color:#a83246; }
+/* Dark mode */
+body.dark{
+  background:#1a1a1a;
+  color:white;
+}
 
+body.dark .card{
+  background:#2b2b2b;
+  border-color:#444;
+}
 
+body.dark input,
+body.dark select{
+  background:#333;
+  color:white;
+  border-color:#555;
+}
+
+/* Stats */
 #stats{
   font-size:14px;
   line-height:1.6;
 }
 
-
-@media(max-width:768px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-}
 </style>
 </head>
 
@@ -134,90 +138,126 @@ button:hover{
 <a class="skip" href="#main">Skip to content</a>
 
 <header>
-  <div class="logo"><strong>💰student Finance Tracker</strong></div>
+  <div class="logo">💰 Student Finance Tracker</div>
+
   <nav>
     <a href="#dashboard">Dashboard</a>
     <a href="#form">Add</a>
     <a href="#records">Records</a>
     <a href="#about">About</a>
-    <a href="#" class="nav-item" id="settingsBtn">Settings</a>
+    <a href="#" id="settingsBtn">Settings</a>
   </nav>
 </header>
 
 <main id="main">
 
-
+<!-- DASHBOARD -->
 <section id="dashboard">
   <h2>Dashboard</h2>
-  <div id="stats" class="card"></div>
+
+  <div class="grid">
+
+    <!-- STATS -->
+    <div class="card">
+      <h3>Stats</h3>
+      <div id="stats"></div>
+    </div>
+
+    <!-- CAP / TARGET -->
+    <div class="card">
+      <h3>Budget Target</h3>
+
+      <input type="number" id="budgetTarget" placeholder="Enter budget target">
+
+      <button id="saveTarget">Save Target</button>
+
+      <div id="targetStats">No target set</div>
+    </div>
+
+  </div>
 </section>
 
+<!-- SEARCH (NOT SETTINGS ANYMORE) -->
+<section class="card">
+  <h2>Search Records</h2>
+  <input id="search" placeholder="Search transactions...">
+</section>
 
-<div class="grid">
+<!-- ADD FORM -->
+<section id="form" class="card">
+  <h2>Add Record</h2>
 
-  
-  <section id="form" class="card">
-    <h2>Add Record</h2>
+  <label>Description</label>
+  <input id="desc" type="text">
 
-    <label>Description</label>
-    <input id="desc" type="text" placeholder="e.g. Lunch">
+  <label>Amount</label>
+  <input id="amount" type="number">
 
-    <label>Amount</label>
-    <input id="amount" type="number" placeholder="e.g. 10.50">
+  <label>Category</label>
+  <input id="cat" type="text">
 
-    <label>Category</label>
-    <input id="cat" type="text" placeholder="e.g. Food">
+  <label>Date</label>
+  <input id="date" type="date">
 
-    <label>Date</label>
-    <input id="date" type="date">
+  <button onclick="UI.addRecord()">Add Record</button>
+</section>
 
-    <button onclick="UI.addRecord()">Add Record</button>
-  </section>
-
-  
-  <section class="card">
-    <h2>Settings</h2>
-
-    <p>Wine Theme Active</p>
-
-    <label>Search (regex supported)</label>
-    <input id="search" placeholder="Try: coffee|bus|2025">
-
-  </section>
-
-</div>
-
-
+<!-- RECORDS -->
 <section id="records" class="card">
   <h2>Records</h2>
   <div id="list"></div>
 </section>
 
-
+<!-- ABOUT -->
 <section id="about" class="card">
   <h2>About</h2>
-   <p>
-    The purpose of this Student Finance Tracker is to help students manage
-    their personal finances by recording expenses, organizing spending into
-    categories, and monitoring financial habits over time. The application
-    provides a simple way to track transactions, search records, and view
-    useful statistics that support better budgeting and financial planning.
+  <p>
+    This Student Finance Tracker helps students manage expenses,
+    track spending, and monitor budgets.
   </p>
 
   <h3>Contact</h3>
-
-  <p>
-    Email: b.akuzwe@alustudent.com
-  </p>
-
-  <p>
-    GitHub: repository link
-  </p>
+  <p>Email: b.akuzwe@alustudent.com</p>
 </section>
 
 </main>
 
+<!-- SETTINGS PANEL -->
+<div id="settingsPanel" class="card">
+
+  <h2>Settings</h2>
+
+  <label>Theme</label>
+  <select id="themeSelect">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="regexToggle">
+    Enable Regex Search
+  </label>
+
+</div>
+
 <script type="module" src="./scripts/ui.js"></script>
+
+<script>
+const btn = document.getElementById("settingsBtn");
+const panel = document.getElementById("settingsPanel");
+
+btn.addEventListener("click", (e) => {
+  e.preventDefault();
+  panel.style.display =
+    panel.style.display === "block" ? "none" : "block";
+});
+
+const themeSelect = document.getElementById("themeSelect");
+
+themeSelect.addEventListener("change", (e) => {
+  document.body.className = e.target.value;
+});
+</script>
 
 </body>
 </html>
