@@ -96,7 +96,7 @@ button:hover{
   background:#5c252c;
 }
 
-/* Settings panel */
+
 #settingsPanel{
   display:none;
   position:fixed;
@@ -106,7 +106,7 @@ button:hover{
   z-index:1000;
 }
 
-/* Dark mode */
+
 body.dark{
   background:#1a1a1a;
   color:white;
@@ -124,7 +124,7 @@ body.dark select{
   border-color:#555;
 }
 
-/* Stats */
+
 #stats{
   font-size:14px;
   line-height:1.6;
@@ -151,19 +151,19 @@ body.dark select{
 
 <main id="main">
 
-<!-- DASHBOARD -->
+
 <section id="dashboard">
   <h2>Dashboard</h2>
 
   <div class="grid">
 
-    <!-- STATS -->
+    
     <div class="card">
       <h3>Stats</h3>
       <div id="stats"></div>
     </div>
 
-    <!-- CAP / TARGET -->
+    
     <div class="card">
       <h3>Budget Target</h3>
 
@@ -177,7 +177,7 @@ body.dark select{
   </div>
 </section>
 
-<!-- SEARCH (NOT SETTINGS ANYMORE) -->
+
 <section class="card">
   <h2>Search Records</h2>
   <input id="search" placeholder="Search transactions...">
@@ -202,13 +202,13 @@ body.dark select{
   <button onclick="UI.addRecord()">Add Record</button>
 </section>
 
-<!-- RECORDS -->
+
 <section id="records" class="card">
   <h2>Records</h2>
   <div id="list"></div>
 </section>
 
-<!-- ABOUT -->
+
 <section id="about" class="card">
   <h2>About</h2>
   <p>
@@ -222,7 +222,7 @@ body.dark select{
 
 </main>
 
-<!-- SETTINGS PANEL -->
+
 <div id="settingsPanel" class="card">
 
   <h2>Settings</h2>
@@ -232,7 +232,8 @@ body.dark select{
     <option value="light">Light</option>
     <option value="dark">Dark</option>
   </select>
-
+<button id="exportBtn">Export Data</button>
+<input type="file" id="importFile">
   <label>
     <input type="checkbox" id="regexToggle">
     Enable Regex Search
@@ -242,22 +243,11 @@ body.dark select{
 
 <script type="module" src="./scripts/ui.js"></script>
 
-<script>
-const btn = document.getElementById("settingsBtn");
-const panel = document.getElementById("settingsPanel");
 
-btn.addEventListener("click", (e) => {
-  e.preventDefault();
-  panel.style.display =
-    panel.style.display === "block" ? "none" : "block";
-});
-
-const themeSelect = document.getElementById("themeSelect");
-
-themeSelect.addEventListener("change", (e) => {
-  document.body.className = e.target.value;
-});
-</script>
 
 </body>
+<footer>
+  <p style="text-align:center; padding:12px; font-size:14px; color:#555;">
+    &copy; 2026 Student Finance Tracker. All rights reserved.
+  </p>
 </html>

@@ -5,18 +5,65 @@ import { search } from "./search.js";
 
 export const UI = {
 
-async init(){
+async init() {
   await seed();
   this.render();
 
+  // SEARCH
   document.querySelector("#search")
-    .addEventListener("input",(e)=>{
+    .addEventListener("input", (e) => {
       this.render(e.target.value);
     });
+    
 
-  // budget target
+  // SETTINGS TOGGLE (clean single version)
+  const settingsBtn = document.getElementById("settingsBtn");
+  const settingsPanel = document.getElementById("settingsPanel");
+
+  settingsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    settingsPanel.style.display =
+      settingsPanel.style.display === "block" ? "none" : "block";
+  });
+  document.getElementById("exportBtn")?.addEventListener("click", () => {
+  const data = JSON.stringify(State.records, null, 2);
+
+  const blob = new Blob([data], { type: "application/json" });
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "finance-data.json";
+  a.click();
+});
+
+document.getElementById("importFile")?.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    try {
+      const parsed = JSON.parse(event.target.result);
+
+      if (!Array.isArray(parsed)) {
+        return alert("Invalid file format");
+      }
+
+      State.records = parsed;
+      save(State.records);
+
+      this.render();
+    } catch {
+      alert("Invalid JSON file");
+    }
+  };
+
+  reader.readAsText(file);
+});
+
+  // BUDGET TARGET
   const savedTarget = localStorage.getItem("budgetTarget");
-  if(savedTarget){
+  if (savedTarget) {
     document.querySelector("#budgetTarget").value = savedTarget;
   }
 
@@ -27,24 +74,22 @@ async init(){
       this.render();
     });
 
-  // settings
-  const settingsBtn = document.getElementById("settingsBtn");
-  const panel = document.getElementById("settingsPanel");
-
-  settingsBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    panel.style.display =
-      panel.style.display === "block" ? "none" : "block";
-  });
-
-  // theme
+  
   const themeSelect = document.getElementById("themeSelect");
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    document.body.className = savedTheme;
+    if (themeSelect) themeSelect.value = savedTheme;
+  }
+
   themeSelect?.addEventListener("change", (e) => {
     document.body.className = e.target.value;
+    localStorage.setItem("theme", e.target.value);
   });
 },
 
-addRecord(){
+addRecord() {
 
   const desc = document.querySelector("#desc");
   const amount = document.querySelector("#amount");
@@ -63,9 +108,9 @@ addRecord(){
   };
 
   const err = validate(r);
-  if(err) return alert(err);
+  if (err) return alert(err);
 
-  if(!r.description || !r.amount || !r.category || !r.date){
+  if (!r.description || !r.amount || !r.category || !r.date) {
     return alert("Please fill all fields");
   }
 
@@ -80,13 +125,13 @@ addRecord(){
   date.value = "";
 },
 
-deleteRecord(id){
+deleteRecord(id) {
   State.records = State.records.filter(r => r.id !== id);
   save(State.records);
   this.render();
 },
 
-render(q=""){
+render(q = "") {
 
   const list = document.querySelector("#list");
   list.innerHTML = "";
@@ -98,7 +143,7 @@ render(q=""){
 
   data.forEach(r => {
 
-    if(r.type === "income"){
+    if (r.type === "income") {
       income += Number(r.amount);
     } else {
       expenses += Number(r.amount);
@@ -134,7 +179,7 @@ render(q=""){
   `;
 
   const targetBox = document.querySelector("#targetStats");
-  if(targetBox){
+  if (targetBox) {
     targetBox.innerHTML = budget
       ? `
         <p>Budget: ${budget}</p>
