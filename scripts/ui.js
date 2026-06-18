@@ -30,10 +30,14 @@ async init() {
   const settingsBtn   = document.getElementById("settingsBtn");
   const settingsPanel = document.getElementById("settingsPanel");
 
-  settingsBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    settingsPanel.style.display =
-      settingsPanel.style.display === "block" ? "none" : "block";
+  settingsBtn.addEventListener("click", () => {
+    const isOpen = settingsPanel.style.display === "block";
+    settingsPanel.style.display = isOpen ? "none" : "block";
+    settingsBtn.setAttribute("aria-expanded", String(!isOpen));
+    if (!isOpen) {
+      const firstFocusable = settingsPanel.querySelector("select, input, button");
+      if (firstFocusable) firstFocusable.focus();
+    }
   });
 
   document.addEventListener("click", (e) => {
@@ -42,6 +46,22 @@ async init() {
       !settingsBtn.contains(e.target)
     ) {
       settingsPanel.style.display = "none";
+      settingsBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && settingsPanel.style.display === "block") {
+      settingsPanel.style.display = "none";
+      settingsBtn.setAttribute("aria-expanded", "false");
+      settingsBtn.focus();
+    }
+  });
+
+  document.getElementById("importLabel")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      document.getElementById("importFile").click();
     }
   });
 
@@ -164,7 +184,6 @@ addRecord() {
   const cat    = document.getElementById("cat");
   const date   = document.getElementById("date");
 
-  
   this.validateField("desc");
   this.validateField("amount");
   this.validateField("cat");
@@ -182,7 +201,7 @@ addRecord() {
   };
 
   const err = validate(r);
-  if (err) return; 
+  if (err) return;
 
   State.records.push(r);
   save(State.records);
@@ -194,7 +213,6 @@ addRecord() {
   cat.value    = "";
   date.value   = "";
 
-  
   ["desc","amount","cat","date"].forEach(id => {
     const el = document.getElementById(id);
     const er = document.getElementById(`${id}-error`);
@@ -243,7 +261,6 @@ render(q = "") {
 
   const data = q ? search(q) : State.records;
 
-  // empty state
   if (data.length === 0) {
     const empty = document.createElement("div");
     empty.className = "empty-state";

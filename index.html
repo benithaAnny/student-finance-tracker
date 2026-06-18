@@ -52,6 +52,21 @@ nav a{
   font-weight:500;
 }
 
+nav button.nav-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  font-weight:500;
+  cursor:pointer;
+  padding:0;
+  margin:0 8px;
+  font-size:inherit;
+}
+
+nav button.nav-btn:hover{
+  text-decoration:underline;
+}
+
 main{
   padding:20px;
 }
@@ -189,6 +204,11 @@ section.active{
   background:#5c252c;
 }
 
+.import-btn:focus{
+  outline:2px solid #fff;
+  outline-offset:2px;
+}
+
 #topBtn{
   position:fixed;
   bottom:20px;
@@ -302,7 +322,6 @@ body.dark .edit-form{
   background:#666;
 }
 
-/* inline validation messages */
 .field-error{
   color:#c0392b;
   font-size:12px;
@@ -319,7 +338,6 @@ input.valid{
   border-color:#27ae60;
 }
 
-/* empty state */
 .empty-state{
   text-align:center;
   padding:30px 0;
@@ -337,6 +355,7 @@ footer p{
 /* 360px */
 @media(max-width:360px){
   nav a{font-size:12px;margin:0 4px;}
+  nav button.nav-btn{font-size:12px;margin:0 4px;}
   main{padding:10px;}
   .grid{grid-template-columns:1fr;}
   header{flex-direction:column;gap:8px;}
@@ -366,11 +385,11 @@ footer p{
     <a href="#form">Add</a>
     <a href="#records">Records</a>
     <a href="#about">About</a>
-    <a href="#" id="settingsBtn">Settings</a>
+    <button id="settingsBtn" class="nav-btn" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
   </nav>
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   <section id="dashboard">
     <h2>Dashboard</h2>
@@ -454,7 +473,7 @@ footer p{
 
 </main>
 
-<div id="settingsPanel" class="card">
+<div id="settingsPanel" class="card" role="dialog" aria-label="Settings" aria-modal="false">
   <h2>Settings</h2>
   <label for="themeSelect">Theme</label>
   <select id="themeSelect">
@@ -462,7 +481,7 @@ footer p{
     <option value="dark">Dark</option>
   </select>
   <button id="exportBtn">Export Data</button>
-  <label for="importFile" class="import-btn">Import Data</label>
+  <label for="importFile" class="import-btn" tabindex="0" id="importLabel">Import Data</label>
   <input type="file" id="importFile" hidden>
   <label>
     <input type="checkbox" id="regexToggle">
