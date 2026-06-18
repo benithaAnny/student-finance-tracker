@@ -45,11 +45,19 @@ header{
   font-size:18px;
 }
 
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:nowrap;
+}
+
 nav a{
-  margin:0 8px;
   text-decoration:none;
   color:#fff;
   font-weight:500;
+  white-space:nowrap;
 }
 
 nav button.nav-btn{
@@ -59,8 +67,8 @@ nav button.nav-btn{
   font-weight:500;
   cursor:pointer;
   padding:0;
-  margin:0 8px;
   font-size:inherit;
+  white-space:nowrap;
 }
 
 nav button.nav-btn:hover{
@@ -352,7 +360,7 @@ footer p{
   color:#555;
 }
 
-/* 360px */
+
 @media(max-width:360px){
   nav a{font-size:12px;margin:0 4px;}
   nav button.nav-btn{font-size:12px;margin:0 4px;}
@@ -361,12 +369,12 @@ footer p{
   header{flex-direction:column;gap:8px;}
 }
 
-/* 768px */
+
 @media(max-width:768px){
   .grid{grid-template-columns:1fr;}
 }
 
-/* 1024px */
+
 @media(min-width:1024px){
   .grid{grid-template-columns:1fr 1fr 1fr;}
 }
@@ -379,13 +387,13 @@ footer p{
 <a class="skip" href="#main">Skip to content</a>
 
 <header>
-  <div class="logo">💰 Student Finance Tracker</div>
+  <div class="logo">Student Finance Tracker</div>
   <nav aria-label="Main navigation">
     <a href="#dashboard">Dashboard</a>
     <a href="#form">Add</a>
     <a href="#records">Records</a>
     <a href="#about">About</a>
-    <button id="settingsBtn" class="nav-btn" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
+    <a href="#" id="settingsBtn">Settings</a>
   </nav>
 </header>
 
