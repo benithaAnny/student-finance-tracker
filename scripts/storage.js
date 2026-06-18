@@ -2,21 +2,23 @@ import { State } from "./state.js";
 
 const KEY = "finance_app";
 
-export function save(){
+export function save() {
   localStorage.setItem(KEY, JSON.stringify(State.records));
 }
 
-export function load(){
-  const d = localStorage.getItem(KEY);
-  if(d) State.records = JSON.parse(d);
-}
+export async function seed() {
+  const saved = localStorage.getItem(KEY);
 
-export async function seed(){
-  const existing = localStorage.getItem("finance_app");
+  if (saved) {
+    const parsed = JSON.parse(saved);
 
-  if(existing) return;
+    if (Array.isArray(parsed)) {
+      State.records = parsed;
+      return;
+    }
+  }
 
-  const res = await fetch("../seed.json");
+  const res = await fetch("./seed.json");
   const data = await res.json();
 
   State.records = data;

@@ -9,14 +9,14 @@ async init() {
   await seed();
   this.render();
 
-  // SEARCH
+  
   document.querySelector("#search")
     .addEventListener("input", (e) => {
       this.render(e.target.value);
     });
     
 
-  // SETTINGS TOGGLE (clean single version)
+  
   const settingsBtn = document.getElementById("settingsBtn");
   const settingsPanel = document.getElementById("settingsPanel");
 
@@ -25,6 +25,19 @@ async init() {
     settingsPanel.style.display =
       settingsPanel.style.display === "block" ? "none" : "block";
   });
+  document.addEventListener("click", function(e) {
+
+  const settingsPanel = document.getElementById("settingsPanel");
+  const settingsBtn = document.getElementById("settingsBtn");
+
+  if (
+    !settingsPanel.contains(e.target) &&
+    !settingsBtn.contains(e.target)
+  ) {
+    settingsPanel.style.display = "none";
+  }
+
+});
   document.getElementById("exportBtn")?.addEventListener("click", () => {
   const data = JSON.stringify(State.records, null, 2);
 
@@ -130,7 +143,41 @@ deleteRecord(id) {
   save(State.records);
   this.render();
 },
+updateRecord(id) {
 
+  const record = State.records.find(r => r.id === id);
+
+  if (!record) return;
+
+  const description = prompt(
+    "Description:",
+    record.description
+  );
+
+  if (description === null) return;
+
+  const amount = prompt(
+    "Amount:",
+    record.amount
+  );
+
+  if (amount === null) return;
+
+  record.description = description;
+record.amount = Number(amount);
+
+const category = prompt("Category:", record.category);
+if (category === null) return;
+
+const date = prompt("Date:", record.date);
+if (date === null) return;
+
+record.category = category;
+record.date = date;
+
+  save(State.records);
+  this.render();
+},
 render(q = "") {
 
   const list = document.querySelector("#list");
@@ -155,12 +202,13 @@ render(q = "") {
     div.innerHTML = `
       <div>
         <b>${r.description}</b><br>
-        <small>${r.category} | ${r.date}</small>
+        <small>${r.category} | ${r.date} amount: ${r.amount}</small>
       </div>
 
-      <div>
-        ${r.amount}
-        <button onclick="UI.deleteRecord('${r.id}')">X</button>
+      <div class="btn_group">
+        
+        <button onclick="UI.deleteRecord('${r.id}')">Delete</button>
+        <button onclick="UI.updateRecord('${r.id}')">Update</button>
       </div>
     `;
 
@@ -192,5 +240,6 @@ render(q = "") {
 
 };
 
-UI.init();
-window.UI = UI;
+UI.init().then(() => {
+  window.UI = UI;
+});

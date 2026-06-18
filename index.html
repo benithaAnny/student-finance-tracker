@@ -18,7 +18,7 @@ body{
   color:#222;
 }
 
-/* Skip link */
+
 .skip{
   position:absolute;
   left:-999px;
@@ -32,7 +32,7 @@ body{
   border-radius:6px;
 }
 
-/* Header */
+
 header{
   background:#722f37;
   padding:12px 16px;
@@ -54,7 +54,7 @@ nav a{
   font-weight:500;
 }
 
-/* Layout */
+
 main{
   padding:20px;
 }
@@ -72,7 +72,7 @@ main{
   padding:15px;
 }
 
-/* Inputs */
+
 input, select{
   width:100%;
   padding:10px;
@@ -129,6 +129,107 @@ body.dark select{
   font-size:14px;
   line-height:1.6;
 }
+.btn-group{
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+}
+
+.btn_group button{
+  width:auto;              
+  padding:8px 12px;
+  background:#722f37;      
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.btn_group button:hover{
+  background:#5c252c;
+}
+
+.card{
+  opacity:0;
+  animation:fadeUp 2s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(50px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+section{
+  transition:all 0.7s ease;
+}
+
+section.blur{
+  opacity:0.6;
+  filter:blur(3px);
+}
+
+section.active{
+  opacity:1;
+  filter:blur(0);
+  animation:smoothShow 0.8s ease;
+}
+
+@keyframes smoothShow{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+.import-btn{
+  display:block;
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  background:#722f37;
+  color:white;
+  text-align:center;
+  cursor:pointer;
+}
+
+.import-btn:hover{
+  background:#5c252c;
+}
+#topBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:48px;
+  height:48px;
+  padding:0;
+  margin-top:0;
+  border-radius:50%;
+  background:#722f37;
+  color:white;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  z-index:999;
+  cursor:pointer;
+}
+
+#topBtn:hover{
+  background:#5c252c;
+}
+
 
 </style>
 </head>
@@ -233,7 +334,10 @@ body.dark select{
     <option value="dark">Dark</option>
   </select>
 <button id="exportBtn">Export Data</button>
-<input type="file" id="importFile">
+<label for="importFile" class="import-btn">Import Data</label>
+
+  <input type="file" id="importFile" hidden>
+
   <label>
     <input type="checkbox" id="regexToggle">
     Enable Regex Search
@@ -243,8 +347,9 @@ body.dark select{
 
 <script type="module" src="./scripts/ui.js"></script>
 
+<script type="module" src="./scripts/scrolltop.js"></script>
 
-
+<button id="topBtn">↑</button>
 </body>
 <footer>
   <p style="text-align:center; padding:12px; font-size:14px; color:#555;">
