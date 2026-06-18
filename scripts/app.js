@@ -3,14 +3,15 @@ export function compileRegex(input){
   catch { return null; }
 }
 
-export function highlight(text,re){
+export function highlight(text, re){
   if(!re) return text;
-  return text.replace(re,m=>`<mark>${m}</mark>`);
+  return text.replace(re, m => `<mark>${m}</mark>`);
 }
 
 export const regexRules = {
-  duplicate:/\b(\w+)\s+\1\b/i,
-  number:/^(0|[1-9]\d*)(\.\d{1,2})?$/,
-  date:/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
-  category:/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/
+  duplicate:   /\b(\w+)\s+\1\b/i,
+  number:      /^(0|[1-9]\d*)(\.\d{1,2})?$/,
+  date:        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
+  category:    /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/,
+  description: /^(?!.*\b(\w+)\b.*\b\1\b)[\w\s,.\-'!?]{3,}$/i
 };

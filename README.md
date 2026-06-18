@@ -1,114 +1,73 @@
-# Student Finance Tracker
+💰 Student Finance Tracker
+A web app that helps students track income, expenses, and budgets.
+Built with vanilla HTML, CSS, and JavaScript no frameworks, no libraries.
 
-## Overview
+ Live Demo
+Watch Demo Video
 
-Student Finance Tracker is a web application that helps students manage their finances by tracking income and expenses, monitoring spending habits, and organizing financial records. The application is built using HTML, CSS, and JavaScript and stores data locally using Local Storage.
+Features
+.............
 
-# Core Features
+Add Records
 
-* Add income and expense transactions
-* Edit existing transactions
-* Delete transactions
-* View transaction history
-* Search transactions by keyword
-* Filter transactions by category
-* Calculate total income
-* Calculate total expenses
-* Display current balance
+You fill in the description, amount, type (expense or income), category, and date. Hit Add Record and it saves instantly.
 
-# Advanced Features
+Edit Records
 
-* Data persistence using Local Storage
-* Import data from JSON files
-* Export data to JSON files
-* Currency settings
-* Regex search option
-* Responsive design for desktop and mobile devices
+Click Edit on any record and a full form drops in below it with all the fields already filled. Change what you want, hit Save.
 
-# Technologies Used
+Delete Records
 
-* HTML5
-* CSS3
-* JavaScript (ES6)
-* Local Storage API
+Click Delete on any record and it's gone immediately.
 
-# Project Structure
+Budget Target
 
-student-finance-tracker/
+You set a number as your spending limit. As you add expenses it tracks how much you've spent and how much is left. If you go over it turns red and warns you out loud for screen readers.
 
-├── index.html + style.css
+Stats
 
-├── app.js
+Shows your total records, total income, total expenses, your balance, and which category you spend the most on.
 
-├── storage.js
+Last 7 Days Chart
 
-├── state.js
+A bar chart that shows your daily spending for the past week. Taller bar means more spent that day. Updates every time you add a record.
 
-├── navigation.js
+Search
 
-├── scrolltop.js
+Type anything in the search box and it filters your records live as you type. Supports regex for advanced searching.
 
-└── README.md
+Import and Export
 
-# How to Run
+Export saves all your records as a JSON file to your computer. Import lets you load that file back in.
 
-1. Download or clone the project.
-2. Open the project folder.
-3. Open `index.html` in your web browser.
+Dark Mode
+
+Switch between light and dark theme from the Settings menu. It remembers your choice next time you open the app.
+
+Responsive
+
+Works on phone, tablet, and desktop. The layout adjusts automatically at three screen sizes.
+
+Accessibility
+
+Has a skip link, keyboard navigation, and ARIA live regions so screen readers announce budget alerts automatically.
 
 
+ Tech Stack
 
-# Usage
+HTML5
+CSS3
+JavaScript 
+localStorage for data persistence
 
-# Adding a Transaction
 
-1. Enter a description.
-2. Enter an amount.
-3. Select a category.
-4. Choose whether it is income or expense.
-5. Click Add Transaction.
-
-# Editing a Transaction
-
-1. Locate the transaction.
-2. Click Edit.
-3. Update the information.
-4. Save changes.
-
-# Deleting a Transaction
-
-1. Locate the transaction.
-2. Click Delete.
-
-# Exporting Data
-
-1. Click the Export Data button.
-2. A JSON file containing all records will be downloaded.
-
-# Importing Data
-
-1. Click Import Data.
-2. Select a previously exported JSON file.
-3. The application will load the imported records.
-
-# Data Storage
-
-All transaction data is stored locally in the browser using Local Storage. Data remains available after refreshing or closing the browser.
-
-# Accessibility
-
-* Semantic HTML structure
-* Keyboard-accessible controls
-* Responsive layout
-* Readable color contrast
-
-## Future Improvements
-
-* Monthly budgeting tools
-* Charts and analytics
-* Multiple currency support
-* Cloud synchronization
-
-## Author
-
-Created as a Student Finance Tracker project using Vanilla JavaScript.
+Project Structure
+index.html+ css
+scripts/
+  app.js
+  ui.js
+  state.js
+  storage.js
+  validator.js
+  search.js
+  scrolltop.js

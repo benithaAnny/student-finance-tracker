@@ -18,7 +18,6 @@ body{
   color:#222;
 }
 
-
 .skip{
   position:absolute;
   left:-999px;
@@ -31,7 +30,6 @@ body{
   padding:6px;
   border-radius:6px;
 }
-
 
 header{
   background:#722f37;
@@ -54,7 +52,6 @@ nav a{
   font-weight:500;
 }
 
-
 main{
   padding:20px;
 }
@@ -71,7 +68,6 @@ main{
   border-radius:12px;
   padding:15px;
 }
-
 
 input, select{
   width:100%;
@@ -96,7 +92,6 @@ button:hover{
   background:#5c252c;
 }
 
-
 #settingsPanel{
   display:none;
   position:fixed;
@@ -105,7 +100,6 @@ button:hover{
   width:280px;
   z-index:1000;
 }
-
 
 body.dark{
   background:#1a1a1a;
@@ -124,21 +118,21 @@ body.dark select{
   border-color:#555;
 }
 
-
 #stats{
   font-size:14px;
   line-height:1.6;
 }
-.btn-group{
+
+.btn_group{
   display:flex;
   gap:10px;
   margin-top:8px;
 }
 
 .btn_group button{
-  width:auto;              
+  width:auto;
   padding:8px 12px;
-  background:#722f37;      
+  background:#722f37;
   color:white;
   border:none;
   border-radius:8px;
@@ -155,16 +149,9 @@ body.dark select{
 }
 
 @keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(50px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  from{opacity:0;transform:translateY(50px);}
+  to{opacity:1;transform:translateY(0);}
 }
-
 
 section{
   transition:all 0.7s ease;
@@ -182,15 +169,10 @@ section.active{
 }
 
 @keyframes smoothShow{
-  from{
-    opacity:0;
-    transform:translateY(30px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
 }
+
 .import-btn{
   display:block;
   width:100%;
@@ -206,6 +188,7 @@ section.active{
 .import-btn:hover{
   background:#5c252c;
 }
+
 #topBtn{
   position:fixed;
   bottom:20px;
@@ -230,6 +213,144 @@ section.active{
   background:#5c252c;
 }
 
+#chart{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  height:120px;
+  margin-top:10px;
+}
+
+.bar-col{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  height:100%;
+  justify-content:flex-end;
+}
+
+.bar-val{
+  font-size:11px;
+  color:#722f37;
+  font-weight:600;
+  min-height:14px;
+}
+
+.bar-fill{
+  width:100%;
+  background:#722f37;
+  border-radius:6px 6px 0 0;
+  transition:height 0.4s ease;
+}
+
+.bar-label{
+  font-size:11px;
+  color:#888;
+}
+
+body.dark .bar-val{color:#e8a0a8;}
+body.dark .bar-fill{background:#e8a0a8;}
+
+#budgetAlert{
+  grid-column:1/-1;
+  font-weight:600;
+  font-size:14px;
+}
+
+#budgetAlert:empty{
+  display:none;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+
+body.dark .item{border-color:#444;}
+
+.edit-form{
+  background:#f9f9f9;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:14px;
+  margin:8px 0 12px;
+}
+
+body.dark .edit-form{
+  background:#2b2b2b;
+  border-color:#444;
+}
+
+.edit-form label{
+  display:block;
+  margin-top:10px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.cancel-btn{
+  background:#888;
+  margin-top:6px;
+}
+
+.cancel-btn:hover{
+  background:#666;
+}
+
+/* inline validation messages */
+.field-error{
+  color:#c0392b;
+  font-size:12px;
+  margin-top:4px;
+  display:block;
+  min-height:16px;
+}
+
+input.invalid{
+  border-color:#c0392b;
+}
+
+input.valid{
+  border-color:#27ae60;
+}
+
+/* empty state */
+.empty-state{
+  text-align:center;
+  padding:30px 0;
+  color:#888;
+  font-size:14px;
+}
+
+footer p{
+  text-align:center;
+  padding:12px;
+  font-size:14px;
+  color:#555;
+}
+
+/* 360px */
+@media(max-width:360px){
+  nav a{font-size:12px;margin:0 4px;}
+  main{padding:10px;}
+  .grid{grid-template-columns:1fr;}
+  header{flex-direction:column;gap:8px;}
+}
+
+/* 768px */
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr;}
+}
+
+/* 1024px */
+@media(min-width:1024px){
+  .grid{grid-template-columns:1fr 1fr 1fr;}
+}
 
 </style>
 </head>
@@ -240,8 +361,7 @@ section.active{
 
 <header>
   <div class="logo">💰 Student Finance Tracker</div>
-
-  <nav>
+  <nav aria-label="Main navigation">
     <a href="#dashboard">Dashboard</a>
     <a href="#form">Add</a>
     <a href="#records">Records</a>
@@ -252,107 +372,113 @@ section.active{
 
 <main id="main">
 
+  <section id="dashboard">
+    <h2>Dashboard</h2>
+    <div class="grid">
 
-<section id="dashboard">
-  <h2>Dashboard</h2>
+      <div class="card">
+        <h3>Stats</h3>
+        <div id="stats"></div>
+      </div>
 
-  <div class="grid">
+      <div class="card">
+        <h3>Budget Target</h3>
+        <input type="number" id="budgetTarget" aria-label="Budget target amount">
+        <button id="saveTarget">Save Target</button>
+        <div id="targetStats"></div>
+      </div>
 
-    
-    <div class="card">
-      <h3>Stats</h3>
-      <div id="stats"></div>
+      <div class="card">
+        <h3>Last 7 Days Spending</h3>
+        <div id="chart" role="img" aria-label="Bar chart of spending over the last 7 days"></div>
+      </div>
+
+      <div
+        id="budgetAlert"
+        class="card"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+
     </div>
+  </section>
 
-    
-    <div class="card">
-      <h3>Budget Target</h3>
+  <section class="card">
+    <h2>Search Records</h2>
+    <input id="search" placeholder="Search transactions..." aria-label="Search transactions">
+  </section>
 
-      <input type="number" id="budgetTarget" placeholder="Enter budget target">
+  <section id="form" class="card">
+    <h2>Add Record</h2>
 
-      <button id="saveTarget">Save Target</button>
+    <label for="desc">Description</label>
+    <input id="desc" type="text" aria-describedby="desc-error">
+    <span class="field-error" id="desc-error" aria-live="polite"></span>
 
-      <div id="targetStats">No target set</div>
-    </div>
+    <label for="amount">Amount</label>
+    <input id="amount" type="number" aria-describedby="amount-error">
+    <span class="field-error" id="amount-error" aria-live="polite"></span>
 
-  </div>
-</section>
+    <label for="type">Type</label>
+    <select id="type">
+      <option value="expense">Expense</option>
+      <option value="income">Income</option>
+    </select>
 
+    <label for="cat">Category</label>
+    <input id="cat" type="text" aria-describedby="cat-error">
+    <span class="field-error" id="cat-error" aria-live="polite"></span>
 
-<section class="card">
-  <h2>Search Records</h2>
-  <input id="search" placeholder="Search transactions...">
-</section>
+    <label for="date">Date</label>
+    <input id="date" type="date" aria-describedby="date-error">
+    <span class="field-error" id="date-error" aria-live="polite"></span>
 
-<!-- ADD FORM -->
-<section id="form" class="card">
-  <h2>Add Record</h2>
+    <button id="addBtn">Add Record</button>
+  </section>
 
-  <label>Description</label>
-  <input id="desc" type="text">
+  <section id="records" class="card">
+    <h2>Records</h2>
+    <div id="list" aria-live="polite"></div>
+  </section>
 
-  <label>Amount</label>
-  <input id="amount" type="number">
-
-  <label>Category</label>
-  <input id="cat" type="text">
-
-  <label>Date</label>
-  <input id="date" type="date">
-
-  <button onclick="UI.addRecord()">Add Record</button>
-</section>
-
-
-<section id="records" class="card">
-  <h2>Records</h2>
-  <div id="list"></div>
-</section>
-
-
-<section id="about" class="card">
-  <h2>About</h2>
-  <p>
-    This Student Finance Tracker helps students manage expenses,
-    track spending, and monitor budgets.
-  </p>
-
-  <h3>Contact</h3>
-  <p>Email: b.akuzwe@alustudent.com</p>
-</section>
+  <section id="about" class="card">
+    <h2>About</h2>
+    <p>
+      This Student Finance Tracker helps students manage expenses,
+      track spending, and monitor budgets.
+    </p>
+    <h3>Contact</h3>
+    <p>Email: b.akuzwe@alustudent.com</p>
+    <p>GitHub: <a href="https://github.com/benithaAnny/student-finance-tracker" target="_blank" rel="noopener noreferrer">b.akuzwe/student-finance-tracker</a></p>
+  </section>
 
 </main>
 
-
 <div id="settingsPanel" class="card">
-
   <h2>Settings</h2>
-
-  <label>Theme</label>
+  <label for="themeSelect">Theme</label>
   <select id="themeSelect">
     <option value="light">Light</option>
     <option value="dark">Dark</option>
   </select>
-<button id="exportBtn">Export Data</button>
-<label for="importFile" class="import-btn">Import Data</label>
-
+  <button id="exportBtn">Export Data</button>
+  <label for="importFile" class="import-btn">Import Data</label>
   <input type="file" id="importFile" hidden>
-
   <label>
     <input type="checkbox" id="regexToggle">
     Enable Regex Search
   </label>
-
 </div>
 
-<script type="module" src="./scripts/ui.js"></script>
+<button id="topBtn" aria-label="Scroll to top">↑</button>
 
+<script type="module" src="./scripts/ui.js"></script>
 <script type="module" src="./scripts/scrolltop.js"></script>
 
-<button id="topBtn">↑</button>
 </body>
+
 <footer>
-  <p style="text-align:center; padding:12px; font-size:14px; color:#555;">
-    &copy; 2026 Student Finance Tracker. All rights reserved.
-  </p>
+  <p>&copy; 2026 Student Finance Tracker. All rights reserved.</p>
+</footer>
+
 </html>
