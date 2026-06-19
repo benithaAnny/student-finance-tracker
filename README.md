@@ -3,7 +3,7 @@ A web app that helps students track income, expenses, and budgets.
 Built with vanilla HTML, CSS, and JavaScript no frameworks, no libraries.
 
  Live Demo
-Watch Demo Video:https://youtu.be/2TUUfgpbTas
+Watch Demo Video:https://youtu.be/AidSGj1wCAM
 
 Features
 
